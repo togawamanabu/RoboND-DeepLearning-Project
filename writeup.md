@@ -46,11 +46,15 @@ Create separable convolution layer to improved runtime performance.
 
 Also add batch normalization, during training, it makes network train faster and allows higher learning rates.
 
-Bilinear upsampling layers in decorder part.
+I used 1x1 convolutions layer to connect the encoder and decoder layers. With 1x1 convolutional layer it retains spatial information but fully-connected layer loose spatial information.
+
+Bilinear upsampling layers in decoder part.
 
 Bilinear upsampling is a resampling technique that utilizes the weighted average of four nearest known pixels, located diagonally to a given pixel, to estimate a new pixel intensity value.
 
 And concatenate layers to retain details from the previous layers.
+
+
 
 ##Data collection
 
@@ -70,7 +74,8 @@ I used AWS's p2.xlarge GPU instance to train model.
 
 Usually learning rate is good to try 0.01 - 0.0001. if I choose  big learning rate, it's first learning but model is not learn well enough, too small learning rate too slow to learn.
 
-epochs need to find good value t
+epochs need to find good value.
+
 
 ```
 learning_rate = 0.005
@@ -80,6 +85,8 @@ steps_per_epoch = 200
 validation_steps = 50
 workers = 4
 ```
+
+I used 1488 images for train, 1184 images for validation.
 
 Fist I tried `batch_size = 64 / epochs = 100`, Looks ok to train but it took 400sec for each epoch even with AWS GPU instance. I could not wait 100 epochs for this may take 10 hours.
 
